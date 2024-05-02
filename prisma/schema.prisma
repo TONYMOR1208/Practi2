@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+// Archivo: schema.prisma
+
+model Idioma {
+  id        Int      @id @default(autoincrement())
+  descripcion  String
+  Registro  Registro  []
+}
+// Archivo: schema.prisma
+
+model Palabra {
+  id        Int      @id @default(autoincrement())
+  palabra   String
+  deletreo  String
+   Registro  Registro  []
+}
+// Archivo: schema.prisma
+
+model Registro {
+  id           Int      @id @default(autoincrement())
+  idioma       Idioma   @relation(fields: [idIdioma], references: [id])
+  palabra      Palabra  @relation(fields: [idPalabra], references: [id])
+  idIdioma     Int
+  idPalabra    Int
+  deletreo     String
+  silabas      Int
+  fonetica     String
+}
